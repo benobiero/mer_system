@@ -1,0 +1,145 @@
+{% include 'base.html' %}
+{% block content %}   
+{% load widget_tweaks %}
+{% load static %}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+<style>
+    .wrapper {
+  width: 400px;
+  margin: 40px auto;
+  padding: 10px;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0px 10px 40px 0px rgba(47,47,47,.1);
+}
+
+input[type="text"]{
+  padding: 10px;
+  margin-bottom: 20px;
+  display: block;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  background: none;
+  width: 274px;
+  color: black;
+}
+
+input[type="text"]:focus {
+  outline: none;
+}
+
+.controls {
+  width: 294px;
+  margin: 15px auto;
+}
+
+#remove_fields {
+  float: right;
+}
+.controls a i.fa-minus {
+  margin-right: 5px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
+  font-size: 48px;
+  color: #232c3d;
+}
+</style>
+
+<div class="container-fluid">
+   
+  <div class="row">
+     {% include 'nav.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2"> Project Entry Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+          </div>
+          
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <form action="{% url 'test' %}" method="post">
+            {% csrf_token %}
+            {% include 'project_page/messages.html'%} {% csrf_token %}
+            <div class="row">
+            <div class="col-md-5">
+            <div class="form-group">
+              <label for="">Your Name</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="name"
+                value=""/>
+            </div>
+            </div>
+            
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="">Your Age</label>
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      name="age"
+                      value=""/>
+                </div>
+            </div>
+            </div>
+           
+            <div class="row">
+            <div class="col-md-3">
+                <div class="wrapper">
+                    <div id="survey_options">
+                      <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="Name">
+                    </div>
+                    <div class="controls">
+                      <a href="#" id="add_more_fields"><i class="fa fa-plus"></i>Add More</a>
+                      <a href="#" id="remove_fields"><i class="fa fa-plus"></i>Remove Field</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+          
+            
+         <div class="col-md-4">
+            <input
+              type="submit"
+              value="Submit"
+              class="btn btn-primary btn-primary-sm"
+            />
+        </div>
+          </form>
+        </div>
+      </div>
+
+      
+
+    </main>
+  </div>
+</div>
+
+
+
+{% endblock %}

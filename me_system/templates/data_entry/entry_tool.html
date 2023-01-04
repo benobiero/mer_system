@@ -1,0 +1,83 @@
+{% include 'base.html' %}
+{% block content %}   
+{% load widget_tweaks %}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+   
+  <div class="row" >
+     {% include 'nav.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" style="border:blue 5px SOLID;width:100%;text-align: center;height: 80px;color:blue;box-shadow: 30px 20px 20px grey;"> 
+            Data Entry Tools</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">     
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="container">
+        <div class="card-body">
+            <!-- first row -->
+          <div class="row">
+           
+            <div class="col-md-5">
+                <div style="box-shadow: 30px 20px 20px grey;">
+                <div class="card">
+                    <div class="card-header">
+                      Project Entry Tool
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">This is a Project Entry</h5>
+                      <p class="card-text">Check it out by clicking the button below</p>
+                      <a href="{% url 'add-project' %}" class="btn btn-primary">visit</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <div style="box-shadow: -30px 20px 20px grey;">
+                <div class="card">
+                    <div class="card-header">
+                      Participant Entry Tool
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">This is Participant tool</h5>
+                      <p class="card-text">This tool will be launched soon</p>
+                      <a href="#" class="btn btn-primary">visit</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+          <br>
+          <br>
+         
+          
+        </div>
+         </div>
+      </div>
+
+      
+
+    </main>
+  </div>
+</div>
+   
+
+</script><script src="js/main.js"></script>
+ 
+
+{% endblock %}

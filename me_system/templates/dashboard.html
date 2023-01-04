@@ -1,0 +1,453 @@
+{% include 'base.html' %}
+{% block content %}   
+{% load widget_tweaks %}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+ 
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+<style>
+ .dashboard-wrapper {
+  margin:auto;
+  height: 130px;
+  margin-top:50px;
+  padding:10px;
+  background-color:white;
+  box-shadow:10px -10px 50px 5px blue;
+}
+.table-wrapper{
+
+  box-shadow:20px 20px 10px grey;
+}
+</style>
+
+<div class="container-fluid">
+   
+  <div class="row">
+     {% include 'nav.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <div class="row" style="width:100%;">
+            <div class="col-md-4">   
+                
+                <label>Filter by Date</label>       
+                <input type="month" id="date-selected" size="50" value="{{ input}}" placeholder="activity not completed" 
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">         
+            </div>
+            
+            <div class="col-md-8">
+                <h1 class="h2" style="width:100%;text-align: center;height: 50px;color:blue;box-shadow: 30px 20px 20px grey;">
+                    Activity Dashboard</h1>
+            </div>
+            
+            
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+            <div class="col-md-8">   
+                <form action="{% url 'dashboard' %}">
+                <label for="">Filter By thematic</label>
+                <select class="form-select" id="thematic" name="thematic" onchange="sendRequest()"" style="border:lightblue 1px SOLID;">
+                  <option  value="the">All</option>
+                  <option value="SRHR">SRHR</option>
+                  <option value="H&G">H&G</option>
+                  <option value="HIV/TB">HIV/TB</option>
+                  <option value="WLPR">WLPR</option>
+                  <option  value="SILU">SILU</option>
+                  
+                </select>
+            </form>
+                    
+            </div>
+
+        </div>
+        </div>
+      
+    
+      {% if monthly_report %}
+      <div class="card">
+        <div class="card-body">
+           <div class="row">
+            <h6> Activity Table</h6>
+
+            <div class="col-md-3">
+                <div class="dashboard-wrapper">
+                <div class="row">
+                    <div class='col-md-9' style="font-size:20px;font-weight:900;"><marquee direction="right" behavior="alternate" style="border:blue 5px SOLID"> {{ data_completed}}</marquee></div>
+                    <div class="col-md-3"><i class="fa fa-check-circle" style="font-size:30px;color:green"></i></div>
+                </div>
+                <a href="" style="font-size:20px;font-weight:900;padding-right: 0px;color: blue;"> <marquee>Total activities completed</marquee></a>
+                </div>
+            </div>
+            
+
+            <div class="col-md-3">
+                <div class="dashboard-wrapper">
+                    <div class="row">
+                    <div class="col-md-9" style="font-size:20px;font-weight:900;">{{ data_completed }}</div>
+                    <div class="col-md-3"><i class="fa fa-check-circle" style="font-size:30px;color:green"></i>
+                    </div>
+                    </div>
+                   
+                    <a href="" style="font-size:20px;font-weight:900;padding-right: 0px;color: blue;"> Completed activities in {{ last_month }}</a>
+                    
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-wrapper">
+                    <div class="row">
+                    <div class="col-md-9" style="font-size:20px;font-weight:900;">{{ data_not_completed }}</div>
+                    <div class="col-md-3"><i class="fa fa-times-circle" style="font-size:30px;color:red"></i>
+                    </div>
+                    </div>
+              
+                    <a href="{% url 'unaccomplished' %}" style="font-size:20px;font-weight:900;padding-right: 0px;color: blue;">Unaccomplishished activities in {{ last_month }}</a>
+                    
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-wrapper">
+                    <div class="row">
+                    <div class="col-md-9" style="font-size:20px;font-weight:900;">{{ data_planned }}</div>
+                    <div class="col-md-3"><i class="fa fa-arrow-right" style="font-size:30px;color:blue"></i>
+                    </div>
+                    </div>
+                 
+                    <a href="" style="font-size:20px;font-weight:900;padding-right: 0px;color: blue;"> Planned activities in {{ current_month }}</a>
+               
+                </div>
+            </div>
+            
+           
+           </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <h6> Visualization</h6>
+      <div class="col-md-4">
+        <canvas id="myChart"></canvas>
+      </div>
+      <div class="col-md-4">
+        <h6>Unaccomplished actvities</h6>
+        <canvas id="myChart2"></canvas>
+      </div>
+      <div class="col-md-4">
+        <canvas id="myChart3"></canvas>
+      </div>
+      </div>
+ 
+      <br>
+     
+      <div class="row">
+
+        <div class="col-md-4">
+        <div class="table-wrapper">
+        <h6 style="font-weight:900;">Completed activities table in {{ last_month }}</h6>
+        <table class="table table-success table-striped table-sm table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Activity name</th>
+                <th scope="col">Thematic</th>
+                <th scope="col">Month</th>
+              </tr>
+            </thead>
+            <tbody>
+             {% for comp in completed_table %}
+              <tr>
+                <td>{{comp.activity_list}}</td>
+                <td>{{comp.name}}</td>
+                <td>{{comp.Month}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="table-wrapper">
+            <h6 style="font-weight:900;">Unacomplished activity table in {{ last_month }}</h6>
+            <table class="table table-success table-striped  table-sm table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">Activity name</th>
+                      <th scope="col">Thematic</th>
+                      <th scope="col">Month</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for comp in unaccomplished_table %}
+                    <tr>
+                      <td>{{comp.unaccomplished_list}}</td>
+                      <td>{{comp.name}}</td>
+                      <td>{{comp.Month}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="table-wrapper">
+            <h6 style="font-weight:900;">Planned activities for {{next_month}} </h6>
+            <table class="table table-success table-striped  table-sm table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">Activity name</th>
+                      <th scope="col">Thematic</th>
+                      <th scope="col">Month</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                   {% for comp in planned_table %}
+                    <tr>
+                      <td>{{comp.planned_list}}</td>
+                      <td>{{comp.name}}</td>
+                      <td>{{comp.Month}}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+            </table>
+            </div>
+            </div>
+
+      </div>
+    {% else %}
+    <h1> No Data in this month</h1>
+    {% endif %}
+  
+      
+      
+
+      
+
+    </main>
+  </div>
+</div>
+   
+
+<script>
+    var endpoint="{% url 'dashboard-charts' %}"
+    var defaultData=[]
+    var defaultLabels=[]
+    $.ajax({
+        method:'GET',
+        url:endpoint,
+        success: function(data){
+            defaultLabels=data.labels
+            defaultData=data.data1      
+
+            const ctx2 = document.getElementById('myChart');
+  
+           new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: defaultLabels,
+        datasets: [{
+          label: 'completed activities',
+          data: defaultData,
+          borderWidth: 1,
+          borderWidth: 1,
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+        }
+    })
+    
+</script>
+<script>
+    var endpoint="{% url 'dashboard-charts' %}"
+    var defaultData=[]
+    var defaultLabels=[]
+    $.ajax({
+        method:'GET',
+        url:endpoint,
+        success: function(data){
+            defaultLabels=data.labels
+            defaultData=data.data2     
+
+            const ctx2 = document.getElementById('myChart2');
+  
+           new Chart(ctx2, {
+      type: 'polarArea',
+      data: {
+        labels: defaultLabels,
+        datasets: [{
+          label: 'Unaccomplished activities',
+          data: defaultData,
+          borderWidth: 1,
+          borderWidth: 1,
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+        }
+    })
+    
+</script>
+
+<script>
+var endpoint="{% url 'dashboard-charts' %}"
+    var defaultData=[]
+    var defaultLabels=[]
+    $.ajax({
+        method:'GET',
+        url:endpoint,
+        success: function(data){
+            defaultLabels=data.labels
+            defaultData=data.data3      
+
+            const ctx2 = document.getElementById('myChart3');
+  
+           new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: defaultLabels,
+        datasets: [{
+          label: 'Planned activities',
+          data: defaultData,
+          borderWidth: 1,
+          borderWidth: 1,
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+        }
+    })
+      
+    
+</script>
+
+<script>
+  // Add an event listener to the input field
+  document.getElementById("date-selected").addEventListener("change", sendInputToDjango);
+
+  function sendInputToDjango() {
+    // Get the value of the input field
+    var input = document.getElementById("date-selected").value;
+
+    // Send the value to the Django view as a query parameter in a GET request
+    window.location.href = `dashboard?input=${input}`;
+  }
+
+</script>
+<!-- <script>
+  function myFunction() {
+    var x = document.getElementById("thematic").value;
+    window.location.href = 'dashboard?thematic=' + x;
+
+  }
+</script> -->
+<!-- <script>
+    var selectedCar = 'All';  // Default value
+    //  document.addEventListener("change", myFunction)
+  
+    function myFunction() {
+      selectedCar = document.getElementById('thematic').value;
+      fetch('dashboard?thematic=' + selectedCar);
+    }
+  
+    window.onload = function() {
+      document.getElementById('thematic').value = selectedCar;
+    }
+  </script> -->
+  <script>
+    async function sendRequest() {
+      // Get the value of the select field
+      var field = document.getElementById("thematic").value;
+  
+      // Send the value to the Django view as a query parameter in a GET request
+      const response = await fetch(`dashboard?thematic=${field}`);
+      const data = await response.json();
+      console.log(data);
+    }
+  </script>
+
+
+{% endblock %}

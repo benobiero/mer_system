@@ -1,0 +1,458 @@
+{% include 'base.html' %}
+{% block content %}   
+{% load widget_tweaks %}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+ 
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+<style>
+    .wrapper {
+  width: 630px;
+  margin: 40px auto;
+  padding: 10px;
+  border-radius: 5px;
+  background: lightblue;
+  box-shadow: 20px 20px 10px grey;
+}
+
+input[type="text"]{
+  padding: 10px;
+  margin-bottom: 20px;
+  display: block;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  background: white;
+  width: 400px;
+  color: black;
+}
+
+input[type="text"]:focus {
+  outline: none;
+}
+
+.controls {
+  width: 294px;
+  margin: 15px auto;
+}
+
+#remove_fields {
+  padding-left: 15px;
+}
+#remove_uncomplished {
+  padding-left: 20px;
+}
+#remove_reason {
+  padding-left: 20px;
+}
+#remove_planned {
+  padding-left: 20px;
+}
+.controls a i.fa-minus {
+  margin-right: 5px;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+h1 {
+  text-align: center;
+  font-size: 48px;
+  color: #232c3d;
+}
+</style>
+
+<div class="container-fluid">
+   
+  <div class="row">
+     {% include 'nav.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" style="width:100%;text-align: center;height: 50px;color:blue;box-shadow: 30px 20px 20px grey;"> Monthly Reporting Tool</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <form action="{% url 'monthly-tool' %}" method="post">
+            {% csrf_token %}
+
+            <div class="row">
+            <div class="col-md-6">
+            <div class="form-group">
+                
+              <label for="">Select Thematic Area</label>
+              <select class="form-select" name="thematic" style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                
+                <option name="thematic" value="H&G">H&G</option>
+                <option name="thematic" value="HIV/TB">HIV/TB</option>
+                <option name="thematic" value="SRHR">SRHR</option>
+                <option name="thematic" value="SILU">SILU</option>
+                <option name="thematic" value="WLPR">WLPR</option>
+              </select>
+            </div>
+            </div>
+            
+            <div class="col-md-6">
+            <div class="form-group">
+             
+              <label for="">Month</label>
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                name="month"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"
+              />
+              
+            </div>
+            </div>
+
+            </div>
+            <div class="row">
+                
+             <label><p>
+            <h5>INTRODUCTION (Brief summary of issues worth noting in the sector at country level) (Maximum 1 page) </h5><br>
+
+            <li>Describe the issues within the thematic areas that affect the thematic area.</li> 
+            <li>State the contribution level of the activity to the result framework </li>
+            <li>State the contribution level of the activity to the donor/programme reporting requirement </li>
+            </p>
+            </label> 
+            <textarea style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;" name="intro" rows="4" cols="50"  class="form-control form-control-sm" placeholder="Enter rext here">  
+            </textarea>
+            </div>
+           <br>
+            <div class="row">
+              <label >
+                <h5>SECTION 1: Accomplished activities against plan during the month as captured in the Annual Costed Work Plan </h5>
+              </label>
+           
+              <div class="col-md-4">
+                <div class="form-group">
+                    
+                    <label for="">Project</label>
+                    <select  class="form-select" name="project1" style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"> 
+                
+                      <option name="project1" value="DreamsII">DreamsII</option>
+                      <option name="project1" value="HIVOS">HIVOS</option>
+                      <option name="project1" value="SRT">SRT</option>
+                      
+                    </select>
+                </div>
+              </div>
+               <div class="col-md-8">
+                <div class="wrapper">
+                    
+                    <label for="">Accomplished activities against plan during the month as captured in the Annual Work Plan <input type="number" class="form-control form-control-sm" name="num_accomplished" placeholder="Enter the number"/></label>
+                    <br>
+                    <br>
+                    <div class="row">
+                    <div class="col-md-8">
+                    <div id="survey_options"> 
+                        
+                      <label>Enter activities in the field below ,you can choose to add more field</label>       
+                      <input type="text" name="activity0" class="survey_options" size="50" placeholder="activity" 
+                      style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                    </div>
+                    </div>
+                    <div class="col-md-4">
+                    <div class="controls">
+                        <label id="add_more_fields" style="color: green;"><i class="fa fa-plus" ></a></i>Add More</label>
+                        <label  id="remove_fields"  style="color: red;"><i class="fa fa-minus"></i>Remove Field</label>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+           
+                <label >
+                  <h5>SECTION 2: Activities planned and not accomplished (include credible reasons for not being done) </h5>
+                </label>
+                <div class="col-md-4">
+                  <div class="form-group">
+                   
+                      <label for="">Project</label>
+                      <select multiple class="form-select" name="project2" style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">   
+                    
+                      <option name="project2" value="DreamsII">DreamsII</option>
+                      <option name="project2" value="HIVOS">HIVOS</option>
+                      <option name="project2" value="SRT">SRT</option>
+                        
+                      </select>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  <div class="wrapper">
+                    
+                      <label >Activities planned and not accomplished <input type="number" class="form-control form-control-sm" name="num_not_accomplished" placeholder="Enter the number"/></label>
+                      <br>
+                      <br>
+                      <div class="row">
+                      <div class="col-md-8">
+                      <div id="uncomplished">  
+                        <label>Enter planned activities and not accomplished in the field below, add more field as you wish</label>       
+                        <input type="text" name="uncomplished0" class="uncomplished" size="50" placeholder="activity not completed" 
+                        style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                      </div>
+                      </div>
+                      <div class="col-md-4">
+                      <div class="controls">
+                        <label id="add_uncomplished" style="color: green;"><i class="fa fa-plus" ></a></i>Add More</label>
+                        <label  id="remove_uncomplished"  style="color: red;"><i class="fa fa-minus"></i>Remove Field</label>
+                      </div>
+                      </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+
+                </div>
+
+                <div class="col-md-8">
+                    <div class="wrapper">
+                        <label for="">Reason for not accomplishing it  <input type="number" class="form-control form-control-sm" name="num_reason" placeholder="Enter the number"/></label>
+                        <br>
+                        <br>
+                        <div class="row">
+                        <div class="col-md-8">
+                        <div id="reason">
+                          <label>Enter the reasons in the field below, add more field  if you get limited</label>         
+                          <input type="text" name="reason0" class="reason" size="50" placeholder="reason" 
+                          style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="controls">
+                            <label id="add_reason" style="color: green;"><i class="fa fa-plus" ></a></i>Add More</label>
+                            <label  id="remove_reason"  style="color: red;"><i class="fa fa-minus"></i>Remove Field</label>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+            <br>
+            <div class="row">
+                <label >
+                    <h5>SECTION 3: Activities Planned for Next Month (Extracted from Annual Costed Work Plan, donor/grant workplan + Activities C/F from previous month)   </h5>
+                  </label>
+                    <div class="wrapper">
+                        <label for="">Activities Planned for Next Month <input type="number" class="form-control form-control-sm" name="num_planned" placeholder="Enter the number"/></label>
+                        <br>
+                        <br>
+                        <div class="row">
+                        <div class="col-md-8">
+                        <div id="planned">
+                        <label>Enter planned activities for next month here,you can choose to add more field</label>         
+                          <input type="text" name="planned0" class="planned" size="100" placeholder="planned" 
+                          style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                        <div class="controls">
+                            <label id="add_planned" style="color: green;"><i class="fa fa-plus" ></a></i>Add More</label>
+                            <label  id="remove_planned"  style="color: red;"><i class="fa fa-minus"></i>Remove Field</label>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                  
+            </div>
+            <br>
+
+            <div class="row">
+                <label><h5>SECTION 4: Lessons Learnt, Case Studies, Human Interest Stories (not more than ½ a page)</h5> 
+                <li>[In the implementation of the activities what went well that can be used to improve future activities in the thematic area or across different thematic areas in the organization]</li>
+                </label> 
+                <textarea style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;" name="lesson" rows="4" cols="50"  class="form-control form-control-sm" placeholder="Enter lesson Learnt">  
+                </textarea> 
+            </div>
+            <br>
+
+            <div class="row">
+                <label><h5>SECTION 5: Major Challenges and Recommendations (not more than ½ a page) </h5> 
+                <li>[In the implementation of the activities what did not go well and need to be done to improve implementation of future activities in the thematic area or across different thematic areas in the organization]</li>
+                </label> 
+                <textarea style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;" name="challenges" rows="4" cols="50"  class="form-control form-control-sm" placeholder="Enter lesson Learnt">  
+                </textarea> 
+            </div>
+            <br>
+            <div class="wrapper">
+                <label>Attach any other document</label>
+            
+                <input type="file" id="myFile" name="filename">
+                  
+            </div>
+
+           
+            <br>
+            <div class="wrapper">
+                <div class="row">
+                <div class="col-md-8">
+                <label for="">Share By</label>
+                <select style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;" class="form-select " name="share">
+                    <option name="m&e" value="M&E">M&E</option>
+                    <option name="program manager" value="Program Manager">Program Manager</option>   
+                </select>
+                </div>
+                <div class="col-md-2">
+                <label>.</label>
+                <input style="border:lightblue 5px SOLID" type="submit"  value="Submit" class="btn btn-primary btn-primary-sm"  />
+                </div>
+                 </div>
+                
+         
+            </div>
+        
+          </form>
+        </div>
+      </div>
+
+      
+
+    </main>
+  </div>
+</div>
+   
+
+</script><script src="js/main.js"></script>
+<script>
+    var survey_options = document.getElementById('survey_options');
+    var add_more_fields = document.getElementById('add_more_fields');
+    var remove_fields = document.getElementById('remove_fields');
+    
+    var uncomplished= document.getElementById('uncomplished');
+    var add_uncomplished = document.getElementById('add_uncomplished');
+    var remove_uncomplished = document.getElementById('remove_uncomplished');
+
+    var reason= document.getElementById('reason');
+    var add_reason = document.getElementById('add_reason');
+    var remove_reason = document.getElementById('remove_reason');
+
+    var planned= document.getElementById('planned');
+    var add_planned= document.getElementById('add_planned');
+    var remove_planned = document.getElementById('remove_planned');
+
+    var fieldCounter = 0;
+    var counterUncomplished = 0;
+    var counterReason = 0;
+    var counterPlanned=0;
+    
+    add_more_fields.onclick = function(){
+        fieldCounter += 1;
+        if(fieldCounter>5){
+             alert("Too many fields added")
+           }
+        else{
+      var newField = document.createElement('input');
+      newField.setAttribute('type','text');
+      newField.setAttribute('name','activity'+fieldCounter);
+      newField.setAttribute('class','survey_options');
+      newField.setAttribute('siz',50);
+      newField.setAttribute('placeholder','activity');
+      survey_options.appendChild(newField);
+    }
+    }
+    
+    remove_fields.onclick = function(){
+        fieldCounter = fieldCounter -1
+      var input_tags = survey_options.getElementsByTagName('input');
+      if(input_tags.length > 1) {
+        survey_options.removeChild(input_tags[(input_tags.length) - 1]);
+      }
+    }
+
+    add_uncomplished.onclick = function(){
+        counterUncomplished += 1;
+        if(counterUncomplished>5){
+             alert("Too many fields added")
+           }
+        else{
+      var newField = document.createElement('input');
+      newField.setAttribute('type','text');
+      newField.setAttribute('name','uncomplished'+counterUncomplished);
+      newField.setAttribute('class','uncomplished');
+      newField.setAttribute('siz',50);
+      newField.setAttribute('placeholder','activity not completed');
+      uncomplished.appendChild(newField);
+    }
+    }
+    
+    remove_uncomplished.onclick = function(){
+        counterUncomplished=counterUncomplished-1
+      var input_tags = uncomplished.getElementsByTagName('input');
+      if(input_tags.length > 1) {
+        uncomplished.removeChild(input_tags[(input_tags.length) - 1]);
+      }
+    }
+    
+    
+    add_reason.onclick = function(){
+        counterReason += 1;
+        if(counterReason>5){
+             alert("Too many fields added")
+           }
+        else{
+      var newField = document.createElement('input');
+      newField.setAttribute('type','text');
+      newField.setAttribute('name','reason'+counterReason);
+      newField.setAttribute('class','reason');
+      newField.setAttribute('siz',50);
+      newField.setAttribute('placeholder','reason for not accomplished');
+      reason.appendChild(newField);
+    }
+    }
+    
+    remove_reason.onclick = function(){
+        
+      var input_tags = reason.getElementsByTagName('input');
+      if(input_tags.length > 1) {
+        reason.removeChild(input_tags[(input_tags.length) - 1]);
+      }
+    }
+    
+    add_planned.onclick = function(){
+      counterPlanned+=1
+      var newField = document.createElement('input');
+      newField.setAttribute('type','text');
+      newField.setAttribute('name','planned'+counterPlanned);
+      newField.setAttribute('class','planned');
+      newField.setAttribute('siz',50);
+      newField.setAttribute('placeholder','planned activities');
+      planned.appendChild(newField);
+    }
+    
+    remove_planned.onclick = function(){
+        counterUncomplished=counterUncomplished-1
+      var input_tags = planned.getElementsByTagName('input');
+      if(input_tags.length > 1) {
+        planned.removeChild(input_tags[(input_tags.length) - 1]);
+      }
+    }
+    
+    
+    
+    </script>
+
+{% endblock %}

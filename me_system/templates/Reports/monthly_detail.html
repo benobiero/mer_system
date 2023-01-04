@@ -1,0 +1,239 @@
+{% include 'base.html' %}
+{% block content %}   
+{% load widget_tweaks %}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+   
+  <div class="row" >
+     {% include 'nav.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" style="border:blue 5px SOLID;width:100%;text-align: center;height: 80px;color:blue;box-shadow: 30px 20px 20px grey;"> 
+            Reports under Review</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">     
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="col-md-11"></div>
+        <div class="col-md-1"><button onclick="printDiv('divToPrint')" class="btn btn-primary">Print</button></div>
+        </div>
+      <div id="divToPrint">
+       <div style='background-color:white;border:2px black solid;padding-top: 5px;padding-bottom: 5px;padding-left: 5px;box-shadow:20px 20px 10px grey;'>
+        <div style="padding:20px 20px ;">
+       <div class="row">
+        <div class="col-md-6">
+           <strong>THEMATIC AREA:</strong><u> SRHR </u>
+        </div>
+        <div class="col-md-6">
+            <strong>MONTH:</strong><u> November </u>
+        </div>
+       </div>
+       <br>
+     
+     <div class="row">
+      <strong>INTRODUCTION (Brief summary of issues worth noting in the sector at country level) (Maximum 1 page)</strong>
+          <br>
+          <br>
+        <li>Describe the issues within the thematic areas that affect the thematic area. </li> 
+        <li>State the contribution level of the activity to the result framework </li>
+        <li>State the contribution level of the activity to the donor/programme reporting requirement</li>
+
+        <p>This is our introduction, we are just giving it a try.</p>
+        <p>We haven't done much when it comes to  this project</p>
+     </div>
+     <br>
+     <div class="row">
+        <strong>SECTION 1: Accomplished activities against plan during the month as captured in the Annual Costed Work Plan  </strong>
+     </div>
+     <br>
+      <div class="row" style="padding-left: 40px;padding-right: 40px;">
+        <table class="table table-bordered" style="border:3px black">
+            <thead>
+            <tr>
+              <th>Project</th>
+              <th>Accomplished activities against plan during the month as captured in the Annual Work Plan  </th>
+              
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>pro 2</td>
+              <td>act 2</td>
+            </tr>
+            <tr>
+                <td>pro 2</td>
+                <td>act 2</td>
+            </tr>
+            
+            </tbody>
+        </table>
+      </div>
+      <br>
+
+      <div class="row">
+        <strong>SECTION 2: Activities planned and not accomplished (include credible reasons for not being done)</strong>
+     </div>
+      <br>
+      <div class="row" style="padding-left: 40px;padding-right: 40px;">
+        <table class="table  table-striped-columns" style="border:3px black solid">
+            <thead>
+            <tr>
+              <th>Project</th>
+              <th>Activities planned and not accomplished  </th>
+              <th>Reason for not accomplishing it  </th>
+              
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>pro 2</td>
+              <td>act 2</td>
+              <td>act 2</td>
+            </tr>
+            <tr>
+                <td>pro 2</td>
+                <td>act 2</td>
+                <td>act 2</td>
+            </tr>
+            
+            </tbody>
+        </table>
+      </div>
+
+
+      <br>
+      <div class="row">
+       <strong>SECTION 3: Activities Planned for Next Month (Extracted from Annual Costed Work Plan, donor/grant workplan + Activities C/F from previous month)</strong>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+       <strong>SECTION 4: Lessons Learnt, Case Studies, Human Interest Stories (not more than ½ a page) </strong>
+        <li style="color:blue"><b>[In the implementation of the activities what went well that can be used to improve future activities in the thematic area or across different thematic areas in the organization]  </b></li>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+      <strong>SECTION 5: Major Challenges and Recommendations (not more than ½ a page) </strong>
+        <li style="color:blue"><b>[In the implementation of the activities what did not go well and need to be done to improve implementation of future activities in the thematic area or across different thematic areas in the organization]  </b></li>
+      </div>
+
+        </div>
+      <br>
+      <br>
+      <br>
+      <br>
+       </div>
+       </div>
+
+    <br>
+    <div class="container">
+    <div class="row" style="border:0px blue solid;box-shadow:-20px 20px 10px grey; width:75%;padding:20px 20px;">
+    <div class="row">
+    <div class="col-md-10"><strong>Comments Section</strong></div>
+    <div class="col-md-2"><i class="fa fa-plus" style='font-size:20px;color:blue'><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Comments</a></i></div>
+   </div>
+    <br>
+    <br>
+    <div class="row">
+    {% for report in month2 %}
+       {% for comment  in report.comments.all  %}
+       <br>
+       <br>
+       <div class="row" style="padding-bottom: 30px;border: 1px blue solid;padding: 20px 20px;">
+       <h4>comments by :<strong>{{ comment.name}}</strong></h4>
+        <h4>Submitted on : <strong>{{ comment.date}}</strong></h4>
+        <p>{{comment.body}}</p>
+        </div>
+        <br>
+        <br>
+        {% endfor %}
+       
+    {% endfor %}
+    </div>
+    </div>
+    </div>
+   <!-- modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="col-md-10">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">You are commenting on{% for report in month2 %} {{report.name}}{%endfor%} monthly report...</h1>
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="color:grey">Close</button>
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% for report in month2 %}
+                <form class="space-y-6" action="#" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                     <div class="row">
+                      <div class="col-md-6">
+                          {% render_field form.date class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Choose Project" %}
+                      </div>
+                      <div class="col-md-6"></div>
+                      </div>
+                      <div class="row">
+                      <div class="col-md-6">
+                        {% render_field form.name class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="your name...." %}
+                      </div>
+                      <div class="col-md-6">
+                        {% render_field form.post class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Enter Activity Name" %}
+                      </div>
+                      </div>
+                      <div>
+                        {% render_field form.body class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="comment here..." %}
+                      </div>
+                      
+                      
+                      <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                </form>
+                 {% endfor %}
+
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+    </main>
+    
+  </div>
+</div>
+   
+<script>
+
+    function printDiv(divId) {
+      var div = document.getElementById(divId);
+      var printWindow = window.open('', '', 'height=400,width=800');
+      printWindow.document.write('<html><head><title>Print</title>');
+      printWindow.document.write('</head><body >');
+      printWindow.document.write(div.innerHTML);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+</script>
+</script><script src="js/main.js"></script>
+
+
+{% endblock %}

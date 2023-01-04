@@ -1,0 +1,267 @@
+{% include 'base.html' %}
+{% block content %}   
+{% load widget_tweaks %}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+ 
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+<style>
+ .dashboard-wrapper {
+  margin:auto;
+  height: 130px;
+  margin-top:50px;
+  padding:10px;
+  background-color:white;
+  box-shadow:10px -10px 50px 5px blue;
+}
+.table-wrapper{
+
+  box-shadow:20px 20px 10px grey;
+}
+</style>
+
+<div class="container-fluid">
+   
+  <div class="row">
+     {% include 'nav.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2" style="width:100%;text-align: center;height: 50px;color:blue;box-shadow: 30px 20px 20px grey;">
+            Project Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">     
+        </div>
+      </div>
+      <div class="row" style="padding-top: 150px;padding-right:30px">
+
+        <h1 style="text-align: center;font-weight: 800;font-size: x-large;"> This Page will be laucnhed soon, once  all grants are updated</h1>
+        <a href="{% url 'dashboard' %}" style="text-align: center;color: blue;font-size: large;"> visit Activity dashboard instead....</a>
+      </div>
+
+    </main>
+  </div>
+</div>
+   
+
+<script>
+    var endpoint="{% url 'dashboard-charts' %}"
+    var defaultData=[]
+    var defaultLabels=[]
+    $.ajax({
+        method:'GET',
+        url:endpoint,
+        success: function(data){
+            defaultLabels=data.labels
+            defaultData=data.data1      
+
+            const ctx2 = document.getElementById('myChart');
+  
+           new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: defaultLabels,
+        datasets: [{
+          label: 'completed activities',
+          data: defaultData,
+          borderWidth: 1,
+          borderWidth: 1,
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+        }
+    })
+    
+</script>
+<script>
+    var endpoint="{% url 'dashboard-charts' %}"
+    var defaultData=[]
+    var defaultLabels=[]
+    $.ajax({
+        method:'GET',
+        url:endpoint,
+        success: function(data){
+            defaultLabels=data.labels
+            defaultData=data.data2     
+
+            const ctx2 = document.getElementById('myChart2');
+  
+           new Chart(ctx2, {
+      type: 'polarArea',
+      data: {
+        labels: defaultLabels,
+        datasets: [{
+          label: 'Unaccomplished activities',
+          data: defaultData,
+          borderWidth: 1,
+          borderWidth: 1,
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+        }
+    })
+    
+</script>
+
+<script>
+var endpoint="{% url 'dashboard-charts' %}"
+    var defaultData=[]
+    var defaultLabels=[]
+    $.ajax({
+        method:'GET',
+        url:endpoint,
+        success: function(data){
+            defaultLabels=data.labels
+            defaultData=data.data3      
+
+            const ctx2 = document.getElementById('myChart3');
+  
+           new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: defaultLabels,
+        datasets: [{
+          label: 'Planned activities',
+          data: defaultData,
+          borderWidth: 1,
+          borderWidth: 1,
+          backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ]
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+        }
+    })
+      
+    
+</script>
+
+<script>
+  // Add an event listener to the input field
+  document.getElementById("date-selected").addEventListener("change", sendInputToDjango);
+
+  function sendInputToDjango() {
+    // Get the value of the input field
+    var input = document.getElementById("date-selected").value;
+
+    // Send the value to the Django view as a query parameter in a GET request
+    window.location.href = `dashboard?input=${input}`;
+  }
+
+</script>
+<!-- <script>
+  function myFunction() {
+    var x = document.getElementById("thematic").value;
+    window.location.href = 'dashboard?thematic=' + x;
+
+  }
+</script> -->
+<!-- <script>
+    var selectedCar = 'All';  // Default value
+    //  document.addEventListener("change", myFunction)
+  
+    function myFunction() {
+      selectedCar = document.getElementById('thematic').value;
+      fetch('dashboard?thematic=' + selectedCar);
+    }
+  
+    window.onload = function() {
+      document.getElementById('thematic').value = selectedCar;
+    }
+  </script> -->
+  <script>
+    async function sendRequest() {
+      // Get the value of the select field
+      var field = document.getElementById("thematic").value;
+  
+      // Send the value to the Django view as a query parameter in a GET request
+      const response = await fetch(`dashboard?thematic=${field}`);
+      const data = await response.json();
+      console.log(data);
+    }
+  </script>
+
+
+{% endblock %}

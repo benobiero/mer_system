@@ -1,0 +1,91 @@
+{% include 'base.html' %}
+{% block content %}  
+{% load widget_tweaks %}
+{% load static %}
+
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+     {% include 'nav.html' %}
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <h1 class="h2" style="width:100%;text-align: center;height: 50px;color:blue;box-shadow: 30px 20px 20px grey; ">Home Page</h1>
+        
+        </div>
+        <div class="row" style="padding-top:50px ;">
+        <div class="row" style="box-shadow: 30px 20px 20px grey;">
+          <h1 class="h3" style="width:100%;text-align: center;height: 80px;color:blue;box-shadow: 30px 20px 20px grey;">
+            <marquee>Monitoring and Evaluation</marquee></h1>
+	        <p style="padding:10px 20px ">
+	      	Monitoring refers to the systematic collection and analysis of data on specified indicators to assess the progress and effectiveness of a project or program. It is a continuous process that provides information on the implementation of a project or program, and is used to identify problems or issues in a timely manner, so that corrective action can be taken.
+	       </p>
+         
+         <p style="padding:20px 20px ">
+          Evaluation, on the other hand, is a systematic and objective assessment of an ongoing or completed project or program. It involves the collection and analysis of data and information to determine the extent to which the objectives of the project or program have been achieved, and to identify the strengths and weaknesses of the project or program. Evaluation is typically conducted at the end of a project or program, but can also be conducted at various points during the life of the project or program.
+        </p>
+        </div>
+        </div>
+        <div class="row" style="padding-top:10px ;padding-left: 10px;padding-bottom: 20px;">
+          <div class="row" style="box-shadow: 30px 20px 20px grey;border:5px lightblue solid">
+            <h1 class="h3" style="width:100%;text-align: center;height: 80px;color:blue;box-shadow: 30px 20px 20px grey;">
+              <marquee direction="right" behavior="alternate">About The System</marquee></h1>
+              <p >
+                M&E System is an online based system designed purposely for automation and digitalization of processes,<br>
+                With Ease,Flexibilty and User Friendly Interface.
+              </p>
+            <p style="padding:20px 20px ">
+              
+              <div class="row" style="padding-left: 150px;">
+              <div class="container">
+              <div class="col-md-8" style=" box-shadow:20px 20px 10px grey;background-color: lightblue;">
+              
+             <div class="'h2" style="font-weight:800"> System Capabilities</div>
+             
+              You can navigate to the sidebar to explore on the capabilities listed below
+             <li>Data Visualization With Filters</li>
+             <li> Data Entry Tools</li>
+             <li>Data Tracking with Filters</li>
+             <li>Data Analysis </li>
+             <li>Dynamic Data Reporting Tools</li>
+             <li>Generation of PDF,Word documents,CSV files, Print functions</li>
+        
+              </div>
+              </div>
+              </div>
+              <br>
+              <div class="row" style="padding: 30px 20px">
+
+              </div>
+
+           </p>
+           
+           
+          </div>
+          </div>
+
+
+      
+        
+      
+      </main>
+    
+  </div>
+</div>
+  
+</script><script src="js/main.js"></script>
+<script src="{% static 'js/searchGrants.js' %}"></script>
+</script>
+
+{% endblock %}

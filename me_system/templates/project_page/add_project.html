@@ -1,0 +1,186 @@
+{% include 'base.html' %}
+{% block content %}   
+{% load widget_tweaks %}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">M&E SYSTEM</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+   
+  <div class="row">
+     {% include 'nav.html' %}
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2"  style="width:100%;text-align: center;height: 50px;color:blue;box-shadow: 30px 20px 20px grey;"> Project Entry Form</h1>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <form action="{% url 'add-project' %}" method="post">
+            {% csrf_token %}
+            {% include 'project_page/messages.html'%} {% csrf_token %}
+            <div class="row">
+            <div class="col-md-3">
+            <div class="form-group">
+              <label for="">Project name</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="project_name"
+                value="{{values.project_name}}"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"/>
+            </div>
+            </div>
+            
+            <div class="col-md-3">
+            <div class="form-group">
+              <label for="">By </label>
+              <select class="form-select" name="name" style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                <option name="name" value="{{user.first_name}}">
+                  {{ user.first_name }}
+                </option>
+         
+              </select>
+            </div>
+            </div>
+
+            <div class="col-md-3">
+            <div class="form-group">
+              <label for="">Thematic Area</label>
+              <select class="form-select" name="thematic_area" style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                {% for thematic in thematic %}
+                <option name="thematic_area" value="{{thematic.name }}">
+                  {{thematic.name}}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            </div>
+          
+            <div class="col-md-3">
+            <div class="form-group">
+              <label for="">Donor</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="donor"
+                value="{{values.donor}}"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"/>
+            </div>
+            </div>
+            </div>
+           <br>
+           <br>
+            <div class="row">
+            <div class="col-md-3">
+
+            <div class="form-group">
+              <label for="">Person responsible</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="person_responsible"
+                value="{{values.person_responsible}}"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"/>
+            </div>
+            </div>
+
+            <div class="col-md-3">
+            <div class="form-group">
+              <label for="">frequency</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="frequency"
+                value="{{values.frequency}}"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"/>
+            </div>
+            </div>
+
+            <div class="col-md-3">
+            <div class="form-group">
+              <label for="">value</label>
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                name="value"
+                value="{{values.value}}"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"/>
+            </div>
+            </div>
+
+            <div class="col-md-3">
+            <div class="form-group">
+              <label for="">currency</label>
+              <select class="form-select" name="currency" style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">
+                
+                <option name="currency" value="USD">USD</option>
+                <option name="currency" value="USD">KSH</option>
+                 
+
+              </select>
+            </div>
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-5">
+            <div class="form-group">
+              <label for="">Project Start</label>
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                name="project_start"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"
+              />
+            </div>
+            </div>
+
+            <div class="col-md-5">
+            <div class="form-group">
+              <label for="">Project  end</label>
+              <input
+                type="date"
+                class="form-control form-control-sm"
+                name="project_end"
+                style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;"
+              />
+            </div>
+            </div>
+            </div>
+            <br>
+            <p><label for="">Enter Basic information about the project</label></p>
+            <textarea  name="info" rows="4" cols="50"  class="form-control form-control-sm" placeholder="Enter rext here" style="border:lightblue 5px SOLID;box-shadow: 10px -5px 20px grey;">  
+            </textarea>
+            <br>
+            
+    
+            <input
+              type="submit"
+              value="Submit"
+              class="btn btn-primary btn-primary-sm"
+            />
+          </form>
+        </div>
+      </div>
+
+      
+
+    </main>
+  </div>
+</div>
+   
+
+</script><script src="js/main.js"></script>
+ 
+
+{% endblock %}
