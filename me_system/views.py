@@ -123,7 +123,7 @@ def test(request):
    
 def reporting_tools(request):
 
-    return render(request,'reports/reporting_tools.html',{})
+    return render(request,'Reports/reporting_tools.html',{})
 
 def monthly_tool(request):
 
