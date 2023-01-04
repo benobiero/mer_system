@@ -12,7 +12,7 @@ urlpatterns = [
          name="serach-grants"),
     path('test', csrf_exempt(views.test),
          name="test"),
-    path('repoting-tools', views.reporting_tools,name='reporting-tools'),
+    path('reporting-tools', views.reporting_tools,name='reporting-tools'),
     path('monthly-tool', views.monthly_tool,name='monthly-tool'),
     path('preview-monthly', views.preview_monthly,name='preview-monthly'),
     path('dashboard', csrf_exempt(views.dashboard),name='dashboard'),
